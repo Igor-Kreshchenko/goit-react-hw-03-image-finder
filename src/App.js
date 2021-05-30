@@ -16,7 +16,7 @@ class App extends Component {
         <ImageGallery />
         <Loader />
         <Button />
-        <Modal />
+        {/* <Modal /> */}
       </div>
     );
   }
