@@ -23,7 +23,7 @@ class App extends Component {
     const { toggleModal } = this;
 
     return (
-      <div className={styles.css}>
+      <div className={styles.App}>
         <SearchBar />
         <ImageGallery onClick={toggleModal} images={images} />
         <Loader />
