@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import SearchBar from './components/Searchbar';
 import ImageGallery from './components/ImageGallery';
-import Loader from './components/Loader';
 import Button from './components/Button';
 import Modal from './components/Modal';
+import AppLoader from './Loader';
 import fetchImages from './services/api-service';
 import styles from './App.module.css';
 
@@ -14,6 +14,8 @@ class App extends Component {
     currentPage: 1,
     searchQuery: '',
     largeImg: '',
+    isLoading: false,
+    error: null,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -31,33 +33,40 @@ class App extends Component {
       images: [],
       searchQuery: query,
       currentPage: 1,
+      error: null,
     });
   };
 
   fetchImages = () => {
     const { currentPage, searchQuery } = this.state;
+    const options = {
+      searchQuery,
+      currentPage,
+    };
 
-    fetchImages(searchQuery, currentPage)
+    this.setState({ isLoading: true });
+
+    fetchImages(options)
       .then(images => {
-        console.log(images);
         this.setState(prevState => ({
           images: [...prevState.images, ...images],
           currentPage: (prevState.currentPage += 1),
         }));
       })
-      .catch(console.log);
+      .catch(error => this.setState({ error }))
+      .finally(() => this.setState({ isLoading: false }));
   };
 
   render() {
-    const { images, showModal } = this.state;
+    const { images, showModal, isLoading } = this.state;
     const { toggleModal, onChangeQuery, fetchImages } = this;
 
     return (
       <div className={styles.App}>
         <SearchBar onSubmit={onChangeQuery} />
         <ImageGallery onClick={toggleModal} images={images} />
-        <Loader />
-        <Button onClick={fetchImages} />
+        {isLoading && <AppLoader />}
+        {images.length > 0 && <Button onClick={fetchImages} />}
         {showModal && (
           <Modal
             onClose={toggleModal}
