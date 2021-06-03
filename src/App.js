@@ -24,8 +24,19 @@ class App extends Component {
     }
   }
 
-  toggleModal = () => {
-    this.setState(({ showModal }) => ({ showModal: !showModal }));
+  onOpenModal = e => {
+    const largeImgUrl = e.target.dataset.src;
+
+    this.setState({
+      showModal: true,
+      largeImg: largeImgUrl,
+    });
+  };
+
+  onCloseModal = () => {
+    this.setState({
+      showModal: false,
+    });
   };
 
   onChangeQuery = query => {
@@ -58,23 +69,16 @@ class App extends Component {
   };
 
   render() {
-    const { images, showModal, isLoading } = this.state;
-    const { toggleModal, onChangeQuery, fetchImages } = this;
+    const { images, showModal, isLoading, largeImg } = this.state;
+    const { onOpenModal, onCloseModal, onChangeQuery, fetchImages } = this;
 
     return (
       <div className={styles.App}>
         <SearchBar onSubmit={onChangeQuery} />
-        <ImageGallery onClick={toggleModal} images={images} />
+        {!isLoading && <ImageGallery onClick={onOpenModal} images={images} />}
         {images.length > 0 && !isLoading && <Button onClick={fetchImages} />}
         {isLoading && <AppLoader />}
-        {showModal && (
-          <Modal
-            onClose={toggleModal}
-            largeImg={
-              'https://image.freepik.com/free-photo/funny-smiling-gray-tabby-cute-cat-with-blue-eyes_253512-36.jpg'
-            }
-          />
-        )}
+        {showModal && <Modal onClose={onCloseModal} largeImg={largeImg} />}
       </div>
     );
   }
