@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ImageGalleryItem from './ImageGalleryItem';
 import styles from './ImageGallery.module.css';
 
@@ -10,8 +11,8 @@ const ImageGallery = ({ onClick, images }) => {
           <ImageGalleryItem
             onClick={onClick}
             key={id}
-            imgSrc={webformatURL}
-            data-src={largeImageURL}
+            webformatURL={webformatURL}
+            largeImg={largeImageURL}
           />
         );
       })}
@@ -20,3 +21,14 @@ const ImageGallery = ({ onClick, images }) => {
 };
 
 export default ImageGallery;
+
+ImageGallery.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  images: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      webformatURL: PropTypes.string.isRequired,
+      largeImageURL: PropTypes.string.isRequired,
+    }).isRequired,
+  ).isRequired,
+};

@@ -65,7 +65,6 @@ class App extends Component {
       <div className={styles.App}>
         <SearchBar onSubmit={onChangeQuery} />
         <ImageGallery onClick={toggleModal} images={images} />
-        {isLoading && <AppLoader />}
         {images.length > 0 && <Button onClick={fetchImages} />}
         {showModal && (
           <Modal
@@ -75,6 +74,7 @@ class App extends Component {
             }
           />
         )}
+        {isLoading && <AppLoader />}
       </div>
     );
   }
