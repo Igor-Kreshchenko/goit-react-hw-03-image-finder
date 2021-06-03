@@ -1,16 +1,18 @@
 import React from 'react';
 import ImageGalleryItem from './ImageGalleryItem';
 import styles from './ImageGallery.module.css';
-import { v4 as uuid4 } from 'uuid';
 
 const ImageGallery = ({ onClick, images }) => {
   return (
     <ul className={styles.ImageGallery}>
-      {images.map(image => {
-        const id = uuid4();
-
+      {images.map(({ id, webformatURL, largeImageURL }) => {
         return (
-          <ImageGalleryItem onClick={onClick} key={id} imgSrc={image.src} />
+          <ImageGalleryItem
+            onClick={onClick}
+            key={id}
+            imgSrc={webformatURL}
+            data-src={largeImageURL}
+          />
         );
       })}
     </ul>
