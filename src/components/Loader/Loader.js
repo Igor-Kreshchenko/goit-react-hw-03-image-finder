@@ -1,17 +1,11 @@
 import React from 'react';
 import Loader from 'react-loader-spinner';
+import styles from './Loader.module.css';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
-
-const styles = {
-  position: 'fixed',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-};
 
 const AppLoader = () => {
   return (
-    <>
+    <div className={styles.Loader}>
       <Loader
         style={styles}
         type="ThreeDots"
@@ -19,7 +13,7 @@ const AppLoader = () => {
         height={100}
         width={100}
       />
-    </>
+    </div>
   );
 };
 
