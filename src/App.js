@@ -3,7 +3,7 @@ import SearchBar from './components/Searchbar';
 import ImageGallery from './components/ImageGallery';
 import Button from './components/Button';
 import Modal from './components/Modal';
-import AppLoader from './Loader';
+import AppLoader from './components/Loader';
 import fetchImages from './services/api-service';
 import styles from './App.module.css';
 
@@ -19,13 +19,15 @@ class App extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.searchQuery !== this.state.searchQuery) {
+    const { searchQuery } = this.state;
+
+    if (prevState.searchQuery !== searchQuery) {
       this.fetchImages();
     }
   }
 
-  onOpenModal = e => {
-    const largeImgUrl = e.target.dataset.src;
+  onOpenModal = ({ target }) => {
+    const largeImgUrl = target.dataset.src;
 
     this.setState({
       showModal: true,
@@ -65,7 +67,13 @@ class App extends Component {
         }));
       })
       .catch(error => this.setState({ error }))
-      .finally(() => this.setState({ isLoading: false }));
+      .finally(() => {
+        this.setState({ isLoading: false });
+        window.scrollTo({
+          top: document.documentElement.scrollHeight,
+          behavior: 'smooth',
+        });
+      });
   };
 
   render() {

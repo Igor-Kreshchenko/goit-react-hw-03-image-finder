@@ -2,14 +2,14 @@ import React from 'react';
 import Loader from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 
-const AppLoader = () => {
-  const styles = {
-    position: 'fixed',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-  };
+const styles = {
+  position: 'fixed',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+};
 
+const AppLoader = () => {
   return (
     <>
       <Loader
